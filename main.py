@@ -1,8 +1,18 @@
 import cv2
 import time
-
+import serial
 font = cv2.FONT_HERSHEY_SIMPLEX
 
+def get_data():
+	ser = serial.Serial('/dev/ttyusb1', 9600, timeout=1)
+	ser_data = ser.read(20)
+	co_data=ser_data[0,3]
+	co2_data=ser_data[3,6]
+	hum_data=ser_data[6,9]
+	tem_data=ser_data[9,12]
+	data = [co_data, co2_data, hum_data, tem_data]
+	return data
+	
 
 def draw_co(co, frame):
     co_x = 300
